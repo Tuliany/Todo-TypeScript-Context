@@ -25,22 +25,39 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
 
   const saveTodo = (todo: ITodo) => {
     const newTodo: ITodo = {
-      id: Math.random(), // not really unique - but fine for this example
+      id: Math.random(),
       title: todo.title,
       description: todo.description,
       status: false,
     }
     setTodos([...todos, newTodo])
   }
-
-  const editTodo = (todo: ITodo) => {
+/*  const editTodo = (todo: ITodo) => {
     let updatedTodos: ITodo = {
       title: todo.title,
       description: todo.description,
       status: false,
       id: 0
     }
-    setTodos([...todos, updatedTodos])
+    setTodos([...todos, updatedTodos]) */
+  const editTodo = (todo: ITodo) => {
+    const { id, title, description } = todo;
+    const updatedTodos = [...todos].map((todo) => {
+      if (todo.id === id) {
+        todo.title = title;
+        todo.description = description;
+      }
+      return todo;
+    });
+    console.log(updatedTodos)
+    setTodos(updatedTodos);
+  }
+
+
+  const deleteTodo = (id: number) => {
+    let updatedTodos = [...todos].filter((todo) =>
+      todo.id !== id);
+    setTodos(updatedTodos)
   }
 
   const completeTodo = (id: number) => {
@@ -52,17 +69,13 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     })
   }
 
-  const deleteTodo = (id: number) => {
-    let updatedTodos = [...todos].filter((todo) => 
-    todo.id !== id);
-    setTodos(updatedTodos)
-  }
 
-return (
-  <TodoContext.Provider value={{ todos, saveTodo, completeTodo, editTodo, deleteTodo }}>
-    {children}
-  </TodoContext.Provider>
-);
+
+  return (
+    <TodoContext.Provider value={{ todos, saveTodo, editTodo, completeTodo, deleteTodo }}>
+      {children}
+    </TodoContext.Provider>
+  );
 };
 
 export default TodoProvider;
