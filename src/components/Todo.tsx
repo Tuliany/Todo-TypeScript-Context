@@ -6,10 +6,11 @@ import EditTodo from './EditTodo';
 type Props = {
   todo: ITodo;
   completeTodo: (id: number) => void;
+  editTodo: (id: number, title: string, description: string) => void;
   deleteTodo: (id: number) => void;
 };
 
-const Todo: React.FC<Props> = ({ todo, completeTodo, deleteTodo }) => {
+const Todo: React.FC<Props> = ({ todo, completeTodo, editTodo, deleteTodo }) => {
   const checkTodo: string = todo.status ? `line-through` : '';
   const [open, setOpen] = React.useState(false);
 
@@ -32,7 +33,7 @@ const Todo: React.FC<Props> = ({ todo, completeTodo, deleteTodo }) => {
       </div>
       <div className='Card'>
         {open && (
-          <EditTodo todo={todo} />
+          <EditTodo handleChange={() => editTodo(todo.id, todo.title, todo.description)} id={todo.id} title={todo.title} description={todo.description} />
         )}
       </div>
     </div>

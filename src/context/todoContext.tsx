@@ -32,25 +32,18 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     }
     setTodos([...todos, newTodo])
   }
-/*  const editTodo = (todo: ITodo) => {
-    let updatedTodos: ITodo = {
-      title: todo.title,
-      description: todo.description,
-      status: false,
-      id: 0
-    }
-    setTodos([...todos, updatedTodos]) */
-  const editTodo = (todo: ITodo) => {
-    const { id, title, description } = todo;
-    const updatedTodos = [...todos].map((todo) => {
+
+  const editTodo = (id: number, title: string, description: string) => {
+    console.log(todos.map((todo) => todo.id))
+    const updatedTodos = todos.map((todo) => {
       if (todo.id === id) {
         todo.title = title;
         todo.description = description;
       }
       return todo;
     });
-    console.log(updatedTodos)
-    setTodos(updatedTodos);
+    setTodos(updatedTodos)
+
   }
 
 

@@ -1,43 +1,28 @@
 import * as React from 'react';
-import { TodoContext } from '../context/todoContext';
-import { TodoContextType, ITodo } from '../@types/todo';
 
 type Props = {
-  todo: ITodo;
+  id: number;
+  title: string;
+  description: string;
+  handleChange: (e: any) => void;
 };
 
-const EditTodo: React.FC<Props> = ({ todo }) => {
-  const { editTodo } = React.useContext(TodoContext) as TodoContextType;
-  const [formData, setFormData] = React.useState<ITodo | {}>([]);
-
-  const handleForm = (e: React.FormEvent<HTMLInputElement>): void => {
-    setFormData({
-      ...formData,
-      [e.currentTarget.id]: e.currentTarget.value,
-    });
-  };
-
-  const handleEditTodo = (e: React.FormEvent, formData: ITodo | any) => {
-    e.preventDefault();
-    editTodo(formData)
-  }
-
-
+const EditTodo: React.FC<Props> = ({ id, title, description, handleChange }) => {
   return (
     <div>
-      <form className="Form" onSubmit={(e) => handleEditTodo(e, formData)}>
-        <div>
+      <form className="Form">
+        <div >
           <>
             <div>
-              <label htmlFor="name">Title</label>
-              <input onChange={handleForm} type="text" id="title" placeholder={todo.title} />
+              <label key={id} htmlFor="name">Title</label>
+              <input  type="text" id="title" placeholder={title} />
             </div><div>
               <label htmlFor="description">Description</label>
-              <input onChange={handleForm} type="text" id="description" placeholder={todo.description} />
+              <input type="text" id="description" placeholder={description} />
             </div>
           </>
         </div>
-        <button disabled={formData === undefined ? true : false}>Update Todo</button>
+        <button onClick={handleChange} >Update Todo</button>
       </form>
     </div>
   )
