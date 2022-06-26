@@ -2,28 +2,21 @@ import * as React from 'react';
 import { TodoContextType, ITodo } from '../@types/todo';
 import { TodoContext } from '../context/todoContext';
 import Todo from '../components/Todo';
-import { Stack, Checkbox, CheckboxGroup } from '@chakra-ui/react'
+import { Checkbox } from '@chakra-ui/react'
 
 const Todos = () => {
   const { todos, completeTodo, editTodo, deleteTodo } = React.useContext(TodoContext) as TodoContextType;
   const completedTask = todos.filter((todo) => (todo.status))
   const [renderize, setRenderize] = React.useState(todos);
+  const [complete, setComplete] = React.useState()
 
-  const filterCompleted = () => {
-    return todos.filter(todo => {
-      if (todo.status === true) {
-        return todo;
-      }
-    }
-    )
-  }
 
   const handleFilter = (e) => {
-    if (e.target.innerHTML === "All") {
+    if (e.target.value === "All") {
       setRenderize(todos);
     }
 
-    if (e.target.innerHTML === "Active") {
+    if (e.target.value === "Active") {
       setRenderize(
         [...todos].filter((todo) => {
           if (todo.status === false) {
@@ -33,7 +26,7 @@ const Todos = () => {
       );
     }
 
-    if (e.target.innerHTML === "Completed") {
+    if (e.target.value === "Complete") {
       setRenderize(
         [...todos].filter((todo) => {
           if (todo.status === true) {
@@ -47,17 +40,15 @@ const Todos = () => {
 
   return (
     <>
-      <div className="Filter">
-        <button type="button" className="Filter__btn" onClick={handleFilter}>
-          All
-        </button>
-        <button type="button" className="Filter__btn" onClick={handleFilter}>
-          Active
-        </button>
-        <button type="button" className="Filter__btn" onClick={handleFilter}>
-          Completed
-        </button>
-      </div>
+      <Checkbox size='sm' value="All" defaultChecked onChange={handleFilter}>
+        All
+      </Checkbox>
+      <Checkbox size='md' value="Complete" onChange={handleFilter}>
+        Complete
+      </Checkbox>
+      <Checkbox size='lg' value="Active" onChange={handleFilter}>
+        Active
+      </Checkbox>
       {renderize.map((todo: ITodo) => (
         <Todo key={todo.id} completeTodo={completeTodo} todo={todo} deleteTodo={deleteTodo} editTodo={editTodo} />
       ))}
