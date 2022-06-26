@@ -21,10 +21,10 @@ const Todo: React.FC<Props> = ({ todo, completeTodo, editTodo, deleteTodo }) => 
           <h1 className={checkTodo}>{todo.title}</h1>
           <span className={checkTodo}>{todo.description}</span>
         </div>
-        <button onClick={() => deleteTodo(todo.id)} className={todo.status ? `hide-button` : 'Card--button'}>
+        <button onClick={() => deleteTodo(todo.id)} className='Card-delete-button'>
           Delete
         </button>
-        <button onClick={() => setOpen(true)} className={todo.status ? `hide-button` : 'Card--button'}>
+        <button onClick={() => setOpen(true)} className={todo.status ? `hide-button` : 'Card-edit-button'}>
           Edit
         </button>
         <button onClick={() => completeTodo(todo.id)} className={todo.status ? `hide-button` : 'Card--button'}>
