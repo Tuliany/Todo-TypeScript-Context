@@ -143,4 +143,9 @@
 
 .task-completed {
   display: flex;
+  padding: 15px;
+}
+
+.filters {
+  padding: 15px;
 }

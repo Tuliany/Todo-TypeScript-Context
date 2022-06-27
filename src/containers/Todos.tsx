@@ -2,14 +2,11 @@ import * as React from 'react';
 import { TodoContextType, ITodo } from '../@types/todo';
 import { TodoContext } from '../context/todoContext';
 import Todo from '../components/Todo';
-import { Checkbox } from '@chakra-ui/react'
 
 const Todos = () => {
   const { todos, completeTodo, editTodo, deleteTodo } = React.useContext(TodoContext) as TodoContextType;
   const completedTask = todos.filter((todo) => (todo.status))
   const [renderize, setRenderize] = React.useState(todos);
-  const [complete, setComplete] = React.useState()
-
 
   const handleFilter = (e) => {
     if (e.target.value === "All") {
@@ -40,27 +37,33 @@ const Todos = () => {
 
   return (
     <>
-      <Checkbox size='sm' value="All" defaultChecked onChange={handleFilter}>
-        All
-      </Checkbox>
-      <Checkbox size='md' value="Complete" onChange={handleFilter}>
-        Complete
-      </Checkbox>
-      <Checkbox size='lg' value="Active" onChange={handleFilter}>
-        Active
-      </Checkbox>
-      {renderize.map((todo: ITodo) => (
-        <Todo key={todo.id} completeTodo={completeTodo} todo={todo} deleteTodo={deleteTodo} editTodo={editTodo} />
-      ))}
+      <div className="main">
+        <div className="filters">
+          <input type="radio" name="filter" value="All" defaultChecked onChange={handleFilter} />
+          {' '}
+          <label>All</label>
+          {' '}
+          <input type="radio" name="filter" value="Complete" onChange={handleFilter} />
+          {' '}
+          <label>Complete</label>
+          {' '}
+          <input type="radio" name="filter" value="Active" onChange={handleFilter} />
+          {' '}
+          <label>Active</label>
+        </div>
+        {renderize.map((todo: ITodo) => (
+          <Todo key={todo.id} completeTodo={completeTodo} todo={todo} deleteTodo={deleteTodo} editTodo={editTodo} />
+        ))}
 
-      <div className="task-completed">
-        <p>{completedTask.length} </p>
-        {' '}
-        /
-        {' '}
-        <p>
-          {todos.length} completed
-        </p>
+        <div className="task-completed">
+          <p>{completedTask.length} </p>
+          {' '}
+          /
+          {' '}
+          <p>
+            {todos.length} completed
+          </p>
+        </div>
       </div>
     </>
   );
