@@ -36,8 +36,11 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   const editTodo = (id: number, title: string, description: string) => {
     const newTasksUpdate = todos.map((todo: ITodo) => {
       if (todo.id === id) {
-        todo.title = title;
-        todo.description = description;
+        return {
+          ...todo,
+          title: title,
+          description: description
+        }
       }
       return todo;
     });
